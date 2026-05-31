@@ -77,8 +77,16 @@ function renderMenu() {
         optionHtml = `
           <div class="mt-2 flex items-center justify-between gap-2">
             <span class="text-[10px] font-body text-warm/70">${item.options.name}:</span>
-            <select id="opt-${item.id}" onchange="changeCardPrice('${item.id}', this)" class="bg-foam text-mocha text-[11px] font-body px-2 py-1 rounded-md border border-latte/30 outline-none max-w-[125px]">
-              ${item.options.list.map(opt => `<option value="${opt.name}" data-price="${opt.price}">${opt.name} (${opt.price}K)</option>`).join('')}
+            <select id="opt-${item.id}" onchange="changeMenuVariant('${item.id}', this)" class="bg-foam text-mocha text-[11px] font-body px-2 py-1 rounded-md border border-latte/30 outline-none max-w-[125px]">
+              ${item.options.list.map(opt => `<option value="${opt.name}" data-price="${opt.price}" data-img="${opt.img || ''}">${opt.name} (${opt.price}K)</option>`).join('')}
+            </select>
+          </div>`;
+      } else if (item.options.type === 'image-select') {
+        optionHtml = `
+          <div class="mt-2 flex items-center justify-between gap-2">
+            <span class="text-[10px] font-body text-warm/70">${item.options.name}:</span>
+            <select id="opt-${item.id}" onchange="changeMenuVariant('${item.id}', this)" class="bg-foam text-mocha text-[11px] font-body px-2 py-1 rounded-md border border-latte/30 outline-none max-w-[125px]">
+              ${item.options.list.map(opt => `<option value="${opt.name}" data-img="${opt.img || ''}">${opt.name}</option>`).join('')}
             </select>
           </div>`;
       }
@@ -93,10 +101,11 @@ function renderMenu() {
     card.innerHTML = `
       <div>
         <div class="rounded-2xl h-28 bg-gradient-to-br ${item.gradient} relative mb-3 flex items-center justify-center overflow-hidden">
-          <span class="font-display text-cream font-bold text-lg opacity-25 select-none uppercase tracking-widest">${item.category}</span>
-          <div class="absolute inset-0 flex items-center justify-center opacity-10">
+          <span class="font-display text-cream font-bold text-lg ${item.img ? 'opacity-0' : 'opacity-25'} select-none uppercase tracking-widest">${item.category}</span>
+          <div class="absolute inset-0 flex items-center justify-center ${item.img ? 'opacity-0' : 'opacity-10'}">
             ${getCategoryIconSvg(item.category)}
           </div>
+          ${item.img ? `<img id="img-${item.id}" src="${item.img}" alt="${item.name}" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">` : ''}
         </div>
         ${displaySub}
         <div class="flex justify-between items-start mb-1">
@@ -145,12 +154,21 @@ window.changePage = function (page) {
   renderMenu();
 };
 
-function changeCardPrice(itemId, selectEl) {
-  const selectedOption = selectEl.options[selectEl.selectedIndex];
-  const price = selectedOption.getAttribute('data-price');
-  const priceTag = document.getElementById(`price-${itemId}`);
-  if (priceTag) priceTag.innerText = `${price}K`;
-}
+window.changeMenuVariant = function(itemId, selectEl) {
+  const selected = selectEl.options[selectEl.selectedIndex];
+  const img   = selected.dataset.img;
+  const price = selected.dataset.price;
+
+  const imageEl = document.getElementById(`img-${itemId}`);
+  const priceEl = document.getElementById(`price-${itemId}`);
+
+  if (img && imageEl) {
+    imageEl.src = img;
+  }
+  if (price && priceEl) {
+    priceEl.innerText = `${price}K`;
+  }
+};
 
 window.filterMenu = function (category) {
   currentCategory = category;
@@ -669,4 +687,28 @@ document.addEventListener('DOMContentLoaded', () => {
   mobileNavLinks.forEach(link => {
     link.addEventListener('click', closeMobileMenu);
   });
+});
+
+// ── Gallery Fullscreen ─────────────────────────────────────────────────────────
+window.openGallery = function (src) {
+    document.getElementById('galleryPreview').src = src;
+    document.getElementById('galleryModal').classList.remove('hidden');
+    document.getElementById('galleryModal').classList.add('flex');
+};
+
+window.closeGallery = function () {
+    document.getElementById('galleryModal').classList.remove('flex');
+    document.getElementById('galleryModal').classList.add('hidden');
+};
+
+// Close gallery modal on click outside image
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('galleryModal');
+    if (modal) {
+        modal.addEventListener('click', function (e) {
+            if (e.target === modal) {
+                window.closeGallery();
+            }
+        });
+    }
 });
