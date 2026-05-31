@@ -29,20 +29,27 @@ function handleOrderChoice() {
     const isOrderNow = document.getElementById('orderNow').checked;
     const menuSection = document.getElementById('menu-section');
     const cartSection = document.getElementById('cart-section');
+    const cartSectionMob = document.getElementById('cart-section-mobile');
 
     if (isOrderNow) {
         menuSection.classList.remove('hidden');
+        // Desktop cart: hanya tampil di lg ke atas (lg:block menangani ini)
         cartSection.classList.remove('hidden');
+        // Mobile cart: tampilkan hanya di bawah lg
+        if (cartSectionMob) cartSectionMob.classList.remove('hidden');
         // Trigger reveal animation karena element sebelumnya display:none
         requestAnimationFrame(() => {
             menuSection.classList.add('visible');
             cartSection.classList.add('visible');
+            if (cartSectionMob) cartSectionMob.classList.add('visible');
         });
     } else {
         menuSection.classList.add('hidden');
         cartSection.classList.add('hidden');
+        if (cartSectionMob) cartSectionMob.classList.add('hidden');
         menuSection.classList.remove('visible');
         cartSection.classList.remove('visible');
+        if (cartSectionMob) cartSectionMob.classList.remove('visible');
     }
 
     updateSummaryOrder();
@@ -203,11 +210,13 @@ function resRenderMenu() {
         card.className = 'res-menu-card p-4';
         card.innerHTML = `
             <div>
-                <div class="rounded-2xl h-28 bg-gradient-to-br ${item.gradient} relative mb-3 flex items-center justify-center overflow-hidden">
-                    <span class="font-display text-cream font-bold text-lg opacity-25 select-none uppercase tracking-widest">${item.category}</span>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-10">
-                        ${getCategoryIconSvg(item.category)}
-                    </div>
+                <div class="rounded-2xl h-28 mb-3 overflow-hidden bg-foam">
+                    <img
+                        src="${item.img}"
+                        alt="${item.name}"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                    >
                 </div>
                 ${displaySub}
                 <div class="flex justify-between items-start mb-1">
@@ -308,15 +317,18 @@ window.addToReservation = function (itemId) {
 
     resRenderCart();
 
-    // Animasi singkat pada badge
-    const badge = document.getElementById('resCartBadge');
-    if (badge) {
-        badge.classList.add('scale-125');
-        setTimeout(() => badge.classList.remove('scale-125'), 200);
-    }
+    // Animasi singkat pada badge (desktop & mobile)
+    ['resCartBadge', 'resCartBadgeMob'].forEach(id => {
+        const badge = document.getElementById(id);
+        if (badge) {
+            badge.classList.add('scale-125');
+            setTimeout(() => badge.classList.remove('scale-125'), 200);
+        }
+    });
 };
 
 function resRenderCart() {
+    // ── Desktop cart elements ──────────────────────────
     const cartItems = document.getElementById('resCartItems');
     const cartBadge = document.getElementById('resCartBadge');
     const cartEmpty = document.getElementById('resCartEmpty');
@@ -324,21 +336,34 @@ function resRenderCart() {
     const subtotalEl = document.getElementById('resSubtotalDisplay');
     const dpEl = document.getElementById('resDpDisplay');
 
+    // ── Mobile cart elements ───────────────────────────
+    const cartItemsMob = document.getElementById('resCartItemsMob');
+    const cartBadgeMob = document.getElementById('resCartBadgeMob');
+    const cartEmptyMob = document.getElementById('resCartEmptyMob');
+    const cartSummaryMob = document.getElementById('resCartSummaryMob');
+    const subtotalElMob = document.getElementById('resSubtotalDisplayMob');
+    const dpElMob = document.getElementById('resDpDisplayMob');
+
     if (!cartItems) return;
 
     // Hapus item cart yang sudah ada (keep empty state element)
-    const existingItems = cartItems.querySelectorAll('.res-cart-item');
-    existingItems.forEach(el => el.remove());
+    cartItems.querySelectorAll('.res-cart-item').forEach(el => el.remove());
+    if (cartItemsMob) cartItemsMob.querySelectorAll('.res-cart-item').forEach(el => el.remove());
 
     if (reservationCart.length === 0) {
         cartEmpty.classList.remove('hidden');
         cartSummary.classList.add('hidden');
         if (cartBadge) cartBadge.textContent = '0';
+        if (cartEmptyMob) cartEmptyMob.classList.remove('hidden');
+        if (cartSummaryMob) cartSummaryMob.classList.add('hidden');
+        if (cartBadgeMob) cartBadgeMob.textContent = '0';
         return;
     }
 
     cartEmpty.classList.add('hidden');
     cartSummary.classList.remove('hidden');
+    if (cartEmptyMob) cartEmptyMob.classList.add('hidden');
+    if (cartSummaryMob) cartSummaryMob.classList.remove('hidden');
 
     let totalQty = 0;
     let subtotal = 0;
@@ -352,9 +377,7 @@ function resRenderCart() {
             ? `<span class="bg-foam text-mocha text-[9px] px-2 py-0.5 rounded-full border border-latte/20 inline-block mt-1">${item.option}</span>`
             : '';
 
-        const cartItemEl = document.createElement('div');
-        cartItemEl.className = 'res-cart-item';
-        cartItemEl.innerHTML = `
+        const cartItemHtml = `
             <div class="flex-1 min-w-0">
                 <h5 class="font-display font-bold text-xs text-mocha leading-tight truncate">${item.name}</h5>
                 ${optionBadge}
@@ -369,13 +392,28 @@ function resRenderCart() {
                 <button onclick="resRemoveItem(${index})" class="block text-[10px] text-red-500 hover:underline mt-0.5 ml-auto">Hapus</button>
             </div>
         `;
+
+        // Render ke desktop cart
+        const cartItemEl = document.createElement('div');
+        cartItemEl.className = 'res-cart-item';
+        cartItemEl.innerHTML = cartItemHtml;
         cartItems.appendChild(cartItemEl);
+
+        // Render ke mobile cart
+        if (cartItemsMob) {
+            const cartItemElMob = document.createElement('div');
+            cartItemElMob.className = 'res-cart-item';
+            cartItemElMob.innerHTML = cartItemHtml;
+            cartItemsMob.appendChild(cartItemElMob);
+        }
     });
 
     if (cartBadge) cartBadge.textContent = totalQty;
+    if (cartBadgeMob) cartBadgeMob.textContent = totalQty;
     if (subtotalEl) subtotalEl.innerText = formatRp(subtotal);
-
-if (dpEl) dpEl.innerText = formatRp(RESERVATION_DP);
+    if (subtotalElMob) subtotalElMob.innerText = formatRp(subtotal);
+    if (dpEl) dpEl.innerText = formatRp(RESERVATION_DP);
+    if (dpElMob) dpElMob.innerText = formatRp(RESERVATION_DP);
 }
 
 window.resUpdateQuantity = function (index, delta) {
