@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CAFFE AY – View Sawah, Suasana Beda</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="js/style.css">
+        <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream:   '#F5EFE6',
+            mocha:   '#3B1F0E',
+            espresso:'#5C2E0A',
+            latte:   '#C8A882',
+            foam:    '#EDE0CC',
+            warm:    '#8B5E3C',
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            italic:  ['Cormorant Garamond', 'serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        }
+      }
+    }
+        </script>
+    </head>
+    <body class="text-mocha">
+        <!-- ═══════════════ NAVBAR ═══════════════ -->
+        <header class="bg-cream/95 backdrop-blur-sm sticky top-0 z-50 border-b border-latte/20">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <svg class="w-9 h-9" viewBox="0 0 36 36" fill="none">
+                        <circle
+                            cx="18"
+                            cy="20"
+                            r="12"
+                            fill="#3B1F0E"
+                            opacity="0.12"
+                        />
+                        <path
+                            d="M10 22 Q14 14 18 18 Q22 22 26 14"
+                            stroke="#3B1F0E"
+                            stroke-width="1.8"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+                        <path
+                            d="M18 10 C18 10 20 6 24 8"
+                            stroke="#3B1F0E"
+                            stroke-width="1.4"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+                        <ellipse
+                            cx="18"
+                            cy="24"
+                            r="9"
+                            ry="3.5"
+                            fill="#3B1F0E"
+                            opacity="0.15"
+                        />
+                    </svg>
+                    <div class="leading-tight">
+                        <div class="text-xs font-body text-warm tracking-widest uppercase">CAFFE</div>
+                        <div class="font-display text-xl font-bold text-mocha leading-none">AY</div>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-8 font-body text-sm font-medium text-mocha">
+                    <a href="#home" class="script-underline border-b-2 border-mocha pb-0.5">Home</a>
+                    <a href="#menu" class="script-underline">Menu</a>
+                    <a href="#order-guide" class="script-underline">Cara Order</a>
+                    <a href="#delivery-area" class="script-underline">Wilayah & Ongkir</a>
+                    <a href="#gallery" class="script-underline">Gallery</a>
+                    <a href="#about" class="script-underline">Tentang Kami</a>
+                    <a href="#contact" class="script-underline">Kontak</a>
+                </nav>
+                <a href="reservasi.html" class="hidden md:inline-flex items-center gap-2 bg-mocha text-cream px-5 py-2.5 rounded-full font-body text-sm font-medium hover:bg-espresso transition-colors duration-200">
+                    Reservasi
+                </a>
+                <button id="menuBtn" class="md:hidden text-mocha p-1.5 rounded-xl hover:bg-mocha/5 transition-colors" aria-label="Open Menu">
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2.2"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </header>
+        <!-- ═══════════════ MOBILE MENU OVERLAY ═══════════════ -->
+        <div id="mobileMenu" class="fixed inset-0 z-[999] bg-mocha/40 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300 md:hidden flex justify-end">
+            <div id="mobileMenuPanel" class="w-80 max-w-[85vw] h-full bg-cream p-8 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300 relative overflow-y-auto">
+                <div>
+                    <div class="flex items-center justify-between mb-10 border-b border-latte/20 pb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="font-display text-xl font-black text-mocha">CAFFE AY</span>
+                        </div>
+                        <button id="closeMenuBtn" class="text-mocha p-2 rounded-xl hover:bg-mocha/5 transition-colors" aria-label="Close Menu">
+                            <svg
+                                class="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2.2"
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+                    <nav class="flex flex-col gap-5 font-display text-2xl font-bold text-mocha">
+                        <a href="#home" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Home</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#menu" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Menu</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#order-guide" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Cara Order</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#delivery-area" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Wilayah & Ongkir</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#gallery" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Gallery</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#about" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Tentang Kami</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="#contact" class="mobile-nav-link flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Kontak</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                        <a href="reservasi.html" class="flex items-center justify-between group hover:text-warm transition-colors">
+                            <span>Reservasi</span>
+                            <svg
+                                class="w-5 h-5 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+                    </nav>
+                </div>
+                <div class="border-t border-latte/20 pt-6">
+                    <a href="#menu" class="mobile-nav-link w-full py-4 px-5 bg-mocha text-cream rounded-2xl font-body font-medium flex items-center justify-center gap-3 shadow-lg hover:bg-espresso transition-all active:scale-[0.98]">
+                        <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            />
+                        </svg>
+                        Pesan & Reservasi
+                    </a>
+                    <p class="text-center font-body text-[11px] text-warm/50 mt-4 tracking-wider">
+                        © 2026 CAFFE AY. All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- ═══════════════ HERO ═══════════════ -->
+        <section id="home" class="max-w-7xl mx-auto px-6 py-12 md:py-16 grid lg:grid-cols-[45%_55%] gap-12 items-center">
+            <div class="fade-up">
+                <p class="font-italic text-warm text-2xl md:text-3xl italic mb-2">View Sawah</p>
+                <h1 class="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-mocha leading-tight mb-5">
+                    Ngopi Santai,
+                    <br>
+                    Pikiran Kembali Segar
+                </h1>
+                <p class="font-body text-warm/80 text-base leading-relaxed mb-8 max-w-sm">
+                    Nikmati suasana tenang dengan pemandangan sawah yang menyegarkan mata.
+                    Tempat yang pas untuk bersantai, berkumpul, dan melepas penat dari aktivitas sehari-hari.
+                </p>
+                <a href="#menu" class="inline-flex items-center gap-3 bg-mocha text-cream px-7 py-3.5 rounded-full font-body font-medium hover:bg-espresso transition-all duration-200 hover:gap-5 group">
+                    Order Sekarang
+                    <svg
+                        class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                    </svg>
+                </a>
+            </div>
+            <div class="fade-up delay-2 relative">
+
+                <div class="hero-photo-shape h-[420px] md:h-[520px] lg:h-[580px]">
+
+                    <img
+                        src="img/hero-view-sawah.jpg"
+                        alt="View Sawah CAFFE AY"
+                        class="w-full h-full object-cover"
+                    >
+
+                    <!-- Overlay -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+
+                </div>
+
+                <!-- Badge -->
+                <div class="absolute bottom-5 left-5 bg-mocha text-cream rounded-2xl px-4 py-3 shadow-xl">
+                    <p class="font-body text-xs text-latte">
+                        Tempat Santai
+                    </p>
+                    <p class="font-display text-base font-bold">
+                        View Sawah 🌾
+                    </p>
+                </div>
+
+            </div>
+        </section>
+        <!-- ═══════════════ FEATURES ═══════════════ -->
+        <section class="bg-foam/60 border-y border-latte/20">
+            <div class="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-latte/25">
+                <div class="flex items-center gap-5 py-6 md:py-0 md:px-10 first:md:pl-0 last:md:pr-0">
+                    <div class="icon-circle">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        >
+                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-mocha mb-1">View Sawah Asri</h3>
+                        <p class="font-body text-sm text-warm/80 leading-relaxed">Nikmati suasana pedesaan yang tenang dengan hamparan sawah yang menyegarkan mata.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5 py-6 md:py-0 md:px-10">
+                    <div class="icon-circle">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        >
+                            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-mocha mb-1">Tempat Refresh Pikiran</h3>
+                        <p class="font-body text-sm text-warm/80 leading-relaxed">Cocok untuk melepas penat, menikmati sore, atau sekadar mencari suasana yang lebih tenang.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5 py-6 md:py-0 md:px-10">
+                    <div class="icon-circle">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.7"
+                        >
+                            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-lg text-mocha mb-1">Nyaman untuk Berkumpul</h3>
+                        <p class="font-body text-sm text-warm/80 leading-relaxed">Pilihan tepat untuk nongkrong bersama teman, keluarga, maupun acara santai lainnya.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════════════ MENU ═══════════════ -->
+        <section id="menu" class="bg-foam/30 py-16 border-t border-latte/20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-10">
+                    <p class="font-italic text-warm italic text-xl mb-1">Menu Favorit Pengunjung</p>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-mocha mb-4">Daftar Menu</h2>
+                    <p class="font-body text-warm/80 text-sm max-w-md mx-auto mb-8">
+                        Temukan berbagai pilihan makanan dan minuman untuk menemani waktu santai Anda bersama keluarga, teman, maupun pasangan.
+                    </p>
+                    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between bg-white p-4 rounded-2xl shadow-sm max-w-5xl mx-auto border border-latte/10">
+                        <div class="relative w-full lg:w-80 shrink-0">
+                            <span class="absolute inset-y-0 left-4 flex items-center text-warm/50">
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    />
+                                </svg>
+                            </span>
+                            <input
+                                type="text"
+                                id="menuSearch"
+                                placeholder="Cari menu favoritmu..."
+                                class="w-full bg-cream/40 border border-latte/20 text-mocha placeholder-warm/50 rounded-full pl-11 pr-4 py-2.5 text-sm outline-none focus:border-latte transition-colors"
+                            >
+                        </div>
+                        <div class="flex gap-2 w-full overflow-x-auto pb-1 lg:pb-0 scrollbar-none justify-start lg:justify-end">
+                            <button onclick="filterMenu('food')" id="tab-food" class="menu-tab-btn active px-5 py-2.5 rounded-full text-xs font-body font-medium transition-all duration-200">Makanan & Camilan</button>
+                            <button onclick="filterMenu('drinks')" id="tab-drinks" class="menu-tab-btn px-5 py-2.5 rounded-full text-xs font-body font-medium transition-all duration-200">Minuman</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="menuItemsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+                <div id="menuEmptyState" class="hidden text-center py-12">
+                    <p class="font-body text-warm/60">Menu tidak ditemukan. Coba kata kunci lain.</p>
+                </div>
+                <div id="pagination" class="flex justify-center items-center gap-2 mt-10 flex-wrap"></div>
+            </div>
+        </section>
+        <!-- ═══════════════ CARA PEMESANAN ═══════════════ -->
+        <section id="order-guide" class="max-w-7xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <p class="font-italic text-warm italic text-xl mb-1">Pesan dari Rumah</p>
+                <h2 class="font-display text-4xl font-bold text-mocha">Cara Order Delivery</h2>
+                <p class="font-body text-warm/70 text-sm mt-3 max-w-lg mx-auto">
+                    Pesan menu favorit Anda hanya dalam beberapa langkah sederhana melalui sistem keranjang dan WhatsApp.
+                </p>
+            </div>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="bg-foam rounded-3xl p-6 border border-latte/20 text-center hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-mocha text-cream flex items-center justify-center mx-auto mb-4 font-display text-xl font-bold">1</div>
+                    <div class="w-12 h-12 rounded-full bg-latte/20 flex items-center justify-center mx-auto mb-4">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.7"
+                                d="M21 21l-4.35-4.35M10 18a8 8 0 100-16 8 8 0 000 16z"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-mocha mb-2">Pilih Menu</h3>
+                    <p class="font-body text-sm text-warm/80 leading-relaxed">Jelajahi daftar makanan dan minuman, lalu pilih menu favorit Anda.</p>
+                </div>
+                <div class="bg-white rounded-3xl p-6 border border-latte/20 text-center shadow-sm hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-mocha text-cream flex items-center justify-center mx-auto mb-4 font-display text-xl font-bold">2</div>
+                    <div class="w-12 h-12 rounded-full bg-latte/20 flex items-center justify-center mx-auto mb-4">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.7"
+                                d="M12 4v16m8-8H4"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-mocha mb-2">Tambah ke Keranjang</h3>
+                    <p class="font-body text-sm text-warm/80 leading-relaxed">Klik tombol "Tambah ke Keranjang" untuk memasukkan pesanan Anda.</p>
+                </div>
+                <div class="bg-foam rounded-3xl p-6 border border-latte/20 text-center hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-mocha text-cream flex items-center justify-center mx-auto mb-4 font-display text-xl font-bold">3</div>
+                    <div class="w-12 h-12 rounded-full bg-latte/20 flex items-center justify-center mx-auto mb-4">
+                        <svg
+                            class="w-6 h-6 text-mocha"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.7"
+                                d="M17 20h5V4H2v16h5m10 0v-5H7v5m10 0H7"
+                            />
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-bold text-lg text-mocha mb-2">Isi Alamat & Ambil Lokasi</h3>
+                    <p class="font-body text-sm text-warm/80 leading-relaxed">Masukkan nama, alamat lengkap, dan ambil lokasi GPS agar pesanan dapat diantar dengan tepat.</p>
+                </div>
+                <div class="bg-mocha text-cream rounded-3xl p-6 text-center hover:-translate-y-1 transition-all duration-300">
+                    <div class="w-14 h-14 rounded-full bg-latte text-mocha flex items-center justify-center mx-auto mb-4 font-display text-xl font-bold">4</div>
+                    <div class="w-12 h-12 rounded-full bg-latte/20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-6 h-6 text-latte" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-bold text-lg mb-2">Kirim Pesanan ke WhatsApp</h3>
+                    <p class="font-body text-sm text-latte/80 leading-relaxed">Pesanan + link lokasi GPS otomatis dikirim ke WhatsApp CAFFE AY untuk diproses.</p>
+                </div>
+            </div>
+        </section>
+        <section id="delivery-area" class="bg-gradient-to-b from-foam/30 via-cream/40 to-transparent py-28 relative overflow-hidden">
+            <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-foam/60 rounded-full filter blur-[120px] pointer-events-none -z-10"></div>
+            <div class="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-latte/15 rounded-full filter blur-[10px] opacity-40 pointer-events-none -z-10 animate-pulse"></div>
+            <div class="max-w-6xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-20">
+                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-latte/30 text-warm font-semibold text-xs uppercase tracking-widest mb-5 backdrop-blur-md">
+                        <span class="w-2 h-2 rounded-full bg-mocha animate-ping"></span>
+                        Informasi Logistik
+                    </span>
+                    <h2 class="font-display text-4xl md:text-5xl font-black text-mocha tracking-tight mb-5 leading-tight">
+                        Cakupan Wilayah &
+                        <span class="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-mocha via-warm to-mocha">
+                            Tarif Ongkir
+                            <span class="absolute bottom-1 left-0 w-full h-[4px] bg-gradient-to-r from-mocha/20 to-transparent rounded-full"></span>
+                        </span>
+                    </h2>
+                    <p class="font-body text-warm/80 max-w-lg mx-auto leading-relaxed text-base">
+                        Layanan pengantaran mandiri langsung menuju lokasi Anda. Nikmati standarisasi tarif ongkir yang transparan, hemat, dan andal.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="group relative bg-white/70 backdrop-blur-md rounded-[32px] p-8 shadow-sm border border-latte/20 hover:border-green-400/40 hover:bg-white hover:shadow-xl transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-green-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"
+                                        />
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-green-50 text-green-700 border border-green-200/50">Zona Utama</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-mocha mb-1">Bebas Ongkir</h3>
+                            <div class="flex items-baseline gap-1 my-3">
+                                <span class="font-display text-3xl font-black text-green-600 tracking-tight">Free</span>
+                                <span class="text-xs text-warm/60 font-body">Rp0</span>
+                            </div>
+                            <div class="w-full h-px border-t border-dashed border-latte/30 my-5"></div>
+                            <ul class="space-y-3 text-sm font-body text-warm/80">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-sm shadow-green-500/50"></span>Karangtengah
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white/70 backdrop-blur-md rounded-[32px] p-8 shadow-sm border border-latte/20 hover:border-blue-400/40 hover:bg-white hover:shadow-xl transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200/50">Zona Dekat</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-mocha mb-1">Tarif Minimum</h3>
+                            <div class="flex items-baseline gap-1 my-3">
+                                <span class="font-display text-3xl font-black text-mocha tracking-tight">Rp3.000</span>
+                            </div>
+                            <div class="w-full h-px border-t border-dashed border-latte/30 my-5"></div>
+                            <ul class="space-y-3 text-sm font-body text-warm/80">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Karangrejo
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Gendol
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>Beji Geneng
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white/70 backdrop-blur-md rounded-[32px] p-8 shadow-sm border border-latte/20 hover:border-amber-400/40 hover:bg-white hover:shadow-xl transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-500 shadow-inner">
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                        />
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                        />
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 border border-amber-200/50">Zona Reguler</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-mocha mb-1">Tarif Standar</h3>
+                            <div class="flex items-baseline gap-1 my-3">
+                                <span class="font-display text-3xl font-black text-mocha tracking-tight">Rp5.000</span>
+                            </div>
+                            <div class="w-full h-px border-t border-dashed border-latte/30 my-5"></div>
+                            <ul class="space-y-3 text-sm font-body text-warm/80">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Kemiri
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Genengan
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Beji Kidul
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Pucangpendowo (Candowo)
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Seluruh Dusun Cendono
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="group relative bg-white/70 backdrop-blur-md rounded-[32px] p-8 shadow-sm border border-latte/20 hover:border-purple-400/40 hover:bg-white hover:shadow-xl transition-all duration-500 flex flex-col justify-between transform hover:-translate-y-2">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-500 shadow-inner">
+                                    <svg
+                                        class="w-6 h-6"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5"
+                                        />
+                                    </svg>
+                                </div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md bg-purple-50 text-purple-700 border border-purple-200/50">Zona Luar</span>
+                            </div>
+                            <h3 class="font-display text-lg font-bold text-mocha mb-1">Tarif Maksimum</h3>
+                            <div class="flex items-baseline gap-1 my-3">
+                                <span class="font-display text-3xl font-black text-mocha tracking-tight">Rp10.000</span>
+                            </div>
+                            <div class="w-full h-px border-t border-dashed border-latte/30 my-5"></div>
+                            <ul class="space-y-3 text-sm font-body text-warm/80">
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Seluruh Desa Sumberrejo
+                                </li>
+                                <li class="flex items-center gap-2.5">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>Seluruh Desa Pager
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-16 text-center">
+                    <p class="font-body text-xs text-warm/60 flex items-center justify-center gap-2 max-w-md mx-auto bg-white/40 border border-latte/10 rounded-full py-2 px-5 backdrop-blur-sm shadow-inner">
+                        <svg
+                            class="w-4 h-4 text-mocha/50 flex-shrink-0"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                        Biaya kirim terhitung otomatis pada sistem kasir digital berdasarkan titik presisi alamat Anda.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════════════ GALLERY ═══════════════ -->
+        <section id="gallery" class="bg-foam/40 py-16">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-10">
+                    <p class="font-italic text-warm italic text-xl mb-1">Suasana CAFFE AY</p>
+                    <h2 class="font-display text-4xl font-bold text-mocha">Area & Pemandangan</h2>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="rounded-2xl overflow-hidden aspect-square bg-gradient-to-br from-latte to-espresso hover:scale-105 transition-transform duration-300 cursor-pointer"></div>
+                    <div class="rounded-2xl overflow-hidden aspect-square bg-gradient-to-tl from-mocha to-warm hover:scale-105 transition-transform duration-300 cursor-pointer md:col-span-2 md:row-span-2 md:aspect-auto"></div>
+                    <div class="rounded-2xl overflow-hidden aspect-square bg-gradient-to-br from-espresso to-latte hover:scale-105 transition-transform duration-300 cursor-pointer"></div>
+                    <div class="rounded-2xl overflow-hidden aspect-square bg-gradient-to-tr from-warm to-mocha hover:scale-105 transition-transform duration-300 cursor-pointer"></div>
+                    <div class="rounded-2xl overflow-hidden aspect-square bg-gradient-to-bl from-latte to-warm hover:scale-105 transition-transform duration-300 cursor-pointer"></div>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════════════ ABOUT ═══════════════ -->
+        <section id="about" class="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-center">
+            <div class="flex flex-col justify-center">
+                <p class="font-italic text-warm italic text-xl mb-2 flex items-center gap-2">
+                    <span class="w-8 h-px bg-latte inline-block"></span>
+                    About Us
+                </p>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-mocha leading-tight mb-5">
+                    Lebih dari
+                    <br>
+                    Sekadar Tempat Makan
+                </h2>
+                <p class="font-body text-warm/80 text-sm leading-relaxed mb-6">
+                    CAFFE AY hadir sebagai tempat bersantai dengan suasana yang tenang dan pemandangan sawah yang menenangkan. Kami menyediakan berbagai pilihan makanan dan minuman untuk menemani waktu berkumpul bersama keluarga, teman, maupun menikmati waktu sendiri dengan lebih nyaman.
+                </p>
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-foam/50 p-4 rounded-2xl border border-latte/10">
+                        <p class="font-display font-bold text-2xl text-mocha">View Sawah</p>
+                        <p class="font-body text-xs text-warm/80">Suasana Asri & Menenangkan</p>
+                    </div>
+                    <div class="bg-foam/50 p-4 rounded-2xl border border-latte/10">
+                        <p class="font-display font-bold text-2xl text-mocha">Nyaman</p>
+                        <p class="font-body text-xs text-warm/80">Cocok untuk Nongkrong Santai</p>
+                    </div>
+                </div>
+                <a href="#menu" class="inline-flex items-center gap-3 bg-mocha text-cream px-6 py-3 rounded-full font-body text-sm font-medium hover:bg-espresso transition-all duration-200 self-start group">
+                    Lihat Daftar Menu
+                    <svg
+                        class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                    </svg>
+                </a>
+            </div>
+            <div class="rounded-3xl overflow-hidden h-[360px] img-interior relative shadow-xl">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-cream/70">
+                        <svg class="w-16 h-16 mx-auto mb-2 opacity-50" viewBox="0 0 64 64" fill="none">
+                            <rect
+                                x="8"
+                                y="20"
+                                width="48"
+                                height="32"
+                                rx="4"
+                                fill="currentColor"
+                                opacity="0.3"
+                            />
+                            <rect
+                                x="14"
+                                y="14"
+                                width="36"
+                                height="8"
+                                rx="2"
+                                fill="currentColor"
+                                opacity="0.5"
+                            />
+                            <circle
+                                cx="22"
+                                cy="36"
+                                r="6"
+                                fill="currentColor"
+                                opacity="0.6"
+                            />
+                            <circle
+                                cx="42"
+                                cy="36"
+                                r="6"
+                                fill="currentColor"
+                                opacity="0.6"
+                            />
+                        </svg>
+                        <div class="font-display text-xl italic font-light tracking-wide px-6 leading-tight text-cream">
+                            Coffee · People
+                            <br>
+                            Stories · Memories
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-t from-mocha/80 to-transparent pointer-events-none"></div>
+                <div class="absolute bottom-4 right-4 bg-cream/95 backdrop-blur-xs text-mocha rounded-2xl px-4 py-3 shadow-md max-w-[200px]">
+                    <p class="font-body text-[10px] text-warm uppercase tracking-wider font-semibold">Lokasi Kami</p>
+                    <p class="font-display font-bold text-xs text-mocha">Nikmati suasana santai dengan pemandangan sawah yang menjadi favorit pengunjung.</p>
+                </div>
+            </div>
+        </section>
+        <!-- ═══════════════ CONTACT ═══════════════ -->
+        <section id="contact" class="bg-mocha">
+            <div class="max-w-7xl mx-auto px-6 py-12 text-center">
+                <h2 class="font-display text-4xl text-cream font-bold mb-4">Hubungi Kami</h2>
+                <p class="font-body text-latte/80 mb-8">Ingin bertanya, melakukan reservasi, atau memesan makanan dan minuman? Hubungi kami melalui WhatsApp.</p>
+                <a href="https://wa.me/6281234567890" target="_blank" class="inline-flex items-center gap-3 bg-latte text-mocha px-8 py-4 rounded-full font-medium hover:bg-cream transition">WhatsApp Kami</a>
+            </div>
+        </section>
+        <!-- ═══════════════ FOOTER ═══════════════ -->
+        <footer class="bg-espresso text-latte/70">
+            <div class="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <svg class="w-7 h-7 opacity-60" viewBox="0 0 36 36" fill="none">
+                        <path
+                            d="M10 22 Q14 14 18 18 Q22 22 26 14"
+                            stroke="#C8A882"
+                            stroke-width="1.8"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+                        <path
+                            d="M18 10 C18 10 20 6 24 8"
+                            stroke="#C8A882"
+                            stroke-width="1.4"
+                            fill="none"
+                            stroke-linecap="round"
+                        />
+                        <ellipse
+                            cx="18"
+                            cy="24"
+                            rx="9"
+                            ry="3.5"
+                            fill="#C8A882"
+                            opacity="0.15"
+                        />
+                    </svg>
+                    <span class="font-display text-cream/60 font-bold">CAFFE AY</span>
+                </div>
+                <p class="font-body text-xs text-center">© 2026 CAFFE AY. All rights reserved. Made with ☕ & ❤️</p>
+                <div class="flex gap-6 font-body text-xs">
+                    <a href="#" class="hover:text-latte transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-latte transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+        <!-- Floating Cart Button -->
+        <button id="floatingCartBtn" onclick="toggleCart()" class="fixed bottom-6 right-6 z-40 bg-mocha text-cream p-4 rounded-full shadow-2xl hover:bg-espresso hover:scale-110 transition-all duration-300 flex items-center justify-center border border-latte/30">
+            <div class="relative">
+                <svg
+                    class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4"/>
+                </svg>
+                <span id="cartCountBadge" class="absolute -top-3 -right-3 bg-latte text-mocha text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border border-mocha hidden">0</span>
+            </div>
+        </button>
+        <!-- Shopping Cart Drawer Overlay -->
+        <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-mocha/50 backdrop-blur-xs z-50 transition-opacity duration-300 opacity-0 pointer-events-none"></div>
+        <!-- Cart Drawer -->
+        <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full sm:w-[450px] bg-cream shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-latte/20 h-screen">
+            <div class="p-6 border-b border-latte/20 flex items-center justify-between bg-mocha text-cream">
+                <div class="flex items-center gap-3">
+                    <svg
+                        class="w-6 h-6 text-latte"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4"/>
+                    </svg>
+                    <h3 class="font-display font-bold text-lg">Keranjang Belanja</h3>
+                </div>
+                <button onclick="toggleCart()" class="text-latte hover:text-cream transition-colors p-1" aria-label="Close Cart">
+                    <svg
+                        class="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                        />
+                    </svg>
+                </button>
+            </div>
+            <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4 min-h-[180px]">
+                <div class="text-center py-12 text-warm/60 flex flex-col items-center justify-center">
+                    <svg
+                        class="w-16 h-16 mb-3 opacity-40 text-warm"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.5"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                        />
+                    </svg>
+                    <p class="font-body text-sm">Keranjang belanja Anda kosong.</p>
+                </div>
+            </div>
+            <div id="cartCheckoutArea" class="hidden border-t border-latte/20 bg-foam/40">
+                <button id="checkoutToggleBtn" onclick="toggleCheckout()" class="w-full flex items-center justify-between px-6 py-4 font-body text-sm font-semibold text-mocha hover:bg-latte/10 transition-all duration-200">
+                    <span id="checkoutToggleText" class="flex items-center gap-2">
+                        <svg
+                            class="w-5 h-5 text-warm"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        Lanjut Checkout
+                    </span>
+                    <svg
+                        id="checkoutChevron"
+                        class="w-5 h-5 text-warm transition-transform duration-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+                <div id="checkoutFormContent" class="hidden px-6 pb-6 space-y-3 overflow-y-auto max-h-[45vh]">
+                    <div>
+                        <label for="orderName" class="block font-body text-xs font-medium text-mocha mb-1">Nama Pemesan *</label>
+                        <input
+                            type="text"
+                            id="orderName"
+                            placeholder="Masukkan nama Anda"
+                            class="w-full bg-white border border-latte/30 text-mocha placeholder-warm/40 rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors"
+                        >
+                    </div>
+                    <div>
+                        <label for="districtSelect" class="block font-body text-xs font-medium text-mocha mb-1">Kecamatan *</label>
+                        <select id="districtSelect" onchange="onDistrictChange()" class="w-full bg-white border border-latte/30 text-mocha rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors">
+                            <option value="">-- Pilih Kecamatan --</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="villageSelect" class="block font-body text-xs font-medium text-mocha mb-1">Desa *</label>
+                        <select id="villageSelect" onchange="onVillageChange()" class="w-full bg-white border border-latte/30 text-mocha rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors">
+                            <option value="">-- Pilih Desa --</option>
+                        </select>
+                    </div>
+                    <div id="hamletSelectContainer">
+                        <label for="hamletSelect" class="block font-body text-xs font-medium text-mocha mb-1">Dusun *</label>
+                        <select id="hamletSelect" onchange="onHamletChange()" class="w-full bg-white border border-latte/30 text-mocha rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors">
+                            <option value="">-- Pilih Dusun --</option>
+                        </select>
+                    </div>
+                    <div id="hamletManualContainer" class="hidden">
+                        <label for="hamletManual" class="block font-body text-xs font-medium text-mocha mb-1">Dusun (opsional)</label>
+                        <input
+                            type="text"
+                            id="hamletManual"
+                            placeholder="Nama dusun (opsional)"
+                            class="w-full bg-white border border-latte/30 text-mocha placeholder-warm/40 rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors"
+                        >
+                    </div>
+                    <div>
+                        <label for="addressDetail" class="block font-body text-xs font-medium text-mocha mb-1">Alamat Detail *</label>
+                        <textarea
+                            id="addressDetail"
+                            rows="2"
+                            placeholder="RT/RW, patokan rumah, warna rumah, dll"
+                            class="w-full bg-white border border-latte/30 text-mocha placeholder-warm/40 rounded-lg px-3 py-2 font-body text-xs outline-none focus:border-latte transition-colors resize-none"
+                        ></textarea>
+                    </div>
+                    <button id="getLocationBtn" onclick="getCustomerLocation()" class="w-full bg-foam border border-latte/30 text-mocha py-2 rounded-lg font-body text-xs font-medium hover:bg-latte/30 transition-all duration-200 flex items-center justify-center gap-2">
+                        📍 Bagikan Lokasi ke Kurir
+                    </button>
+                    <div id="locationStatus" class="font-body text-xs text-center text-warm/60">Lokasi belum dibagikan</div>
+                    <div id="shippingInfo" class="bg-white border border-latte/20 rounded-lg px-3 py-2 font-body text-xs flex justify-between items-center">
+                        <span class="text-warm/70">Ongkir:</span>
+                        <span id="shippingCostDisplay" class="font-bold text-mocha">Rp0</span>
+                    </div>
+                    <div class="border-t border-latte/25 pt-3 space-y-1">
+                        <div class="flex justify-between font-body text-xs text-warm/70">
+                            <span>Subtotal:</span>
+                            <span id="cartSubtotalPrice">Rp0</span>
+                        </div>
+                        <div class="flex justify-between font-body text-xs text-warm/70">
+                            <span>Ongkir:</span>
+                            <span id="cartShippingPrice">Rp0</span>
+                        </div>
+                        <div class="flex justify-between font-body text-sm font-bold text-mocha pt-1 border-t border-latte/20">
+                            <span>Total:</span>
+                            <span id="cartTotalPrice">Rp0</span>
+                        </div>
+                    </div>
+                    <button onclick="sendOrderToWhatsApp()" class="w-full bg-mocha text-cream py-3 rounded-full font-body font-medium text-sm hover:bg-espresso transition-all duration-200 flex items-center justify-center gap-2 shadow-md">
+                        <svg class="w-5 h-5 text-latte" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 1.966 14.122 1.06 11.5 1.06c-5.448 0-9.886 4.372-9.89 9.802-.001 1.777.47 3.507 1.365 5.06L2.095 21.39l5.552-1.436zm10.742-7.408c-.29-.144-1.711-.837-1.977-.932-.266-.097-.459-.144-.652.144-.193.289-.748.932-.917 1.121-.169.19-.338.212-.627.069-.29-.144-1.223-.446-2.329-1.423-.86-.759-1.44-1.7-1.609-1.987-.168-.29-.018-.445.126-.588.13-.13.29-.338.435-.506.145-.169.193-.289.29-.481.097-.193.048-.362-.024-.506-.073-.144-.652-1.558-.894-2.133-.236-.563-.475-.486-.652-.495-.169-.009-.362-.01-.555-.01-.193 0-.507.072-.772.36-.265.289-1.013.98-1.013 2.392 0 1.412 1.037 2.775 1.182 2.968.145.19 2.041 3.084 4.945 4.32.69.293 1.23.469 1.65.6.692.218 1.324.187 1.823.113.557-.083 1.711-.69 1.952-1.357.242-.667.242-1.24.17-1.357-.073-.117-.266-.19-.556-.334z"/>
+                        </svg>
+                        Kirim Pesanan ke WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script src="js/menu-data.js"></script>
+        <script src="js/delivery-zones.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>

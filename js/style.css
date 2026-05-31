@@ -1,0 +1,225 @@
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #F5EFE6;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Hero Photo */
+.hero-photo-shape {
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 48px;
+
+    box-shadow:
+        0 25px 50px rgba(59, 31, 14, 0.15),
+        0 10px 25px rgba(59, 31, 14, 0.08);
+}
+
+.hero-photo-shape img {
+    transition: transform .6s ease;
+}
+
+.hero-photo-shape:hover img {
+    transform: scale(1.03);
+}
+
+/* Animated underline */
+.script-underline {
+    position: relative;
+    display: inline-block;
+}
+
+.script-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: #C8A882;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.script-underline:hover::after {
+    transform: scaleX(1);
+}
+
+/* Fade-in animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    animation: fadeUp 0.75s ease both;
+}
+
+.delay-1 {
+    animation-delay: 0.15s;
+}
+
+.delay-2 {
+    animation-delay: 0.30s;
+}
+
+.delay-3 {
+    animation-delay: 0.45s;
+}
+
+.delay-4 {
+    animation-delay: 0.60s;
+}
+
+/* Card hover */
+.menu-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(59, 31, 14, 0.18);
+}
+
+/* Nav link */
+nav a {
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: #8B5E3C;
+}
+
+/* Feature icon circle */
+.icon-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #EDE0CC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Coffee images via CSS gradients (no external img needed) */
+.img-iced-latte {
+    background: linear-gradient(160deg, #C8A882 0%, #6B3A1F 50%, #3B1F0E 100%);
+}
+
+.img-cappuccino {
+    background: linear-gradient(160deg, #EDE0CC 0%, #C8A882 40%, #7A4520 100%);
+}
+
+.img-mocha {
+    background: linear-gradient(160deg, #3B1F0E 0%, #7A4520 40%, #C8A882 100%);
+}
+
+.img-interior {
+    background: linear-gradient(135deg, #3B1F0E 0%, #5C2E0A 50%, #8B5E3C 100%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #F5EFE6;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #C8A882;
+    border-radius: 3px;
+}
+
+/* Active/Inactive Tab styling */
+.menu-tab-btn {
+    background-color: #EDE0CC;
+    color: #8B5E3C;
+    white-space: nowrap;
+}
+
+.menu-tab-btn.active {
+    background-color: #3B1F0E;
+    color: #F5EFE6;
+}
+
+.menu-tab-btn:hover:not(.active) {
+    background-color: #E8D5BB;
+    color: #3B1F0E;
+}
+
+/* Scrollbar hide utility */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-none {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+/* ── Mobile Menu Fix ─────────────────────────────────────────────────────── */
+#mobileMenu {
+    /* Pastikan overlay menutupi seluruh layar termasuk area notch */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height untuk mobile */
+}
+
+#mobileMenuPanel {
+    /* Panel slide-in dari kanan, pastikan penuh tinggi layar */
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    /* Padding bawah aman untuk iPhone dengan home indicator */
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+}
+
+/* Transisi opacity overlay */
+#mobileMenu.opacity-0 {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    visibility: hidden;
+}
+
+#mobileMenu:not(.opacity-0) {
+    visibility: visible;
+}
+
+/* Transition panel geser */
+#mobileMenuPanel {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prevent body scroll saat menu terbuka */
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+/* Responsive Hero Shape */
+@media (max-width: 768px) {
+    .hero-photo-shape {
+        border-radius: 32px;
+    }
+}
