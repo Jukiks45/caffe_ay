@@ -441,7 +441,7 @@ window.sendReservationToWhatsApp = function () {
     const isOrderLater = document.getElementById('orderLater').checked;
     const notes = document.getElementById('resNotes').value.trim();
     const agreed = document.getElementById('resAgree').checked;
-    const waNumber = '6281252055995';
+    const waNumber = '6285851150138';
 
     // ── Validasi ────────────────────────────────────────
     if (!name) {

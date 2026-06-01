@@ -525,7 +525,7 @@ window.sendOrderToWhatsApp = function () {
   const district = document.getElementById('districtSelect').value;
   const village = document.getElementById('villageSelect').value;
   const addressDetail = document.getElementById('addressDetail').value.trim();
-  const waNumber = '6281252055995';
+  const waNumber = '6285851150138';
 
   // Tentukan dusun (manual atau select)
   const hamletManualContainer = document.getElementById('hamletManualContainer');
